@@ -7,7 +7,7 @@ std::vector<std::vector<RelativeIndex>> SearchServer::search(const std::vector<s
     std::vector <Entry> list;
     std::vector <Entry> newList;
 
-/* // Для разрабочика получить результат
+/* // Для разработчика получить результат
 
 
     for (int i = 0; i < queries_input.size(); ++i) {
@@ -75,7 +75,7 @@ std::vector<std::vector<RelativeIndex>> SearchServer::search(const std::vector<s
 
     }
 
-/*    // Для разрабочика получить результат
+/*    // Для разработчика получить результат
 
     for (int i = 0, q = 0; i < numberSearchWords.size(); ++i) {
 
@@ -140,7 +140,7 @@ std::vector<std::vector<RelativeIndex>> SearchServer::search(const std::vector<s
 
     }
 
-/*    // Для разрабочика получить результат
+/*    // Для разработчика получить результат
 
     for (int i = 0; i < result.size(); ++i) {
 

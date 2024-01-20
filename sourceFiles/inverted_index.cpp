@@ -142,7 +142,7 @@ void InvertedIndex::UpdateDocumentBase(std::vector<std::string> input_docs) {
 
     fillingFile.close();
 
-/*  // Для разрабочика получить результат
+/*  // Для разработчика получить результат
 
     for (auto &pair: freq_dictionary) {
 
@@ -186,7 +186,7 @@ std::vector<Entry> InvertedIndex::GetWordCount(const std::string &word) {
 
 
 
-/* // Для разрабочика получить результат
+/* // Для разработчика получить результат
 
     for (int i = 0; i < entrys.size(); ++i) {
 

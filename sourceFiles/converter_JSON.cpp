@@ -109,7 +109,7 @@ void ConverterJSON::putAnswers(std::vector<std::vector<std::pair<int, float>>> a
 
     fileAnswers.close();
 
-/* // Для разрабочика получить результат
+/* // Для разработчика получить результат
 
     int i = 0;
 
