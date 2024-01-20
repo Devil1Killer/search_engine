@@ -1,0 +1,137 @@
+{
+    "answers": {
+        "request_1": {
+            "relevance": [
+                {
+                    "docid": "1",
+                    "rank": "2.400000",
+                    "search word": "sunt"
+                },
+                {
+                    "docid": "4",
+                    "rank": "1.900000",
+                    "search word": "sunt"
+                },
+                {
+                    "docid": "3",
+                    "rank": "1.800000",
+                    "search word": "sunt"
+                },
+                {
+                    "docid": "2",
+                    "rank": "1.700000",
+                    "search word": "sunt"
+                },
+                {
+                    "docid": "0",
+                    "rank": "1.600000",
+                    "search word": "sunt"
+                }
+            ],
+            "result": true
+        },
+        "request_2": {
+            "relevance": [
+                {
+                    "docid": "0",
+                    "rank": "2.500000",
+                    "search word": "dolore car six"
+                },
+                {
+                    "docid": "4",
+                    "rank": "2.300000",
+                    "search word": "dolore car six"
+                },
+                {
+                    "docid": "3",
+                    "rank": "2.100000",
+                    "search word": "dolore car six"
+                },
+                {
+                    "docid": "1",
+                    "rank": "1.700000",
+                    "search word": "dolore car six"
+                },
+                {
+                    "docid": "2",
+                    "rank": "1.600000",
+                    "search word": "dolore car six"
+                }
+            ],
+            "result": true
+        },
+        "request_3": {
+            "relevance": [
+                {
+                    "docid": "2",
+                    "rank": "0.100000",
+                    "search word": "car"
+                }
+            ],
+            "result": true
+        },
+        "request_4": {
+            "relevance": [
+                {
+                    "docid": "3",
+                    "rank": "0.300000",
+                    "search word": "six"
+                }
+            ],
+            "result": true
+        },
+        "request_5": {
+            "relevance": [
+                {
+                    "docid": "3",
+                    "rank": "3.500000",
+                    "search word": "sit veniam"
+                },
+                {
+                    "docid": "4",
+                    "rank": "3.100000",
+                    "search word": "sit veniam"
+                },
+                {
+                    "docid": "0",
+                    "rank": "2.800000",
+                    "search word": "sit veniam"
+                },
+                {
+                    "docid": "1",
+                    "rank": "2.700000",
+                    "search word": "sit veniam"
+                },
+                {
+                    "docid": "2",
+                    "rank": "2.500000",
+                    "search word": "sit veniam"
+                }
+            ],
+            "result": true
+        },
+        "request_6": {
+            "relevance": [
+                {
+                    "docid": "1",
+                    "rank": "1.900000",
+                    "search word": "good man elit"
+                },
+                {
+                    "docid": "3",
+                    "rank": "0.300000",
+                    "search word": "good man elit"
+                },
+                {
+                    "docid": "4",
+                    "rank": "0.200000",
+                    "search word": "good man elit"
+                }
+            ],
+            "result": true
+        },
+        "request_7": {
+            "result": false
+        }
+    }
+}
