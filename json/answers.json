@@ -113,25 +113,26 @@
         "request_6": {
             "relevance": [
                 {
+                    "docid": "3",
+                    "rank": "2.000000",
+                    "search word": "good man elit"
+                },
+                {
                     "docid": "1",
                     "rank": "1.900000",
                     "search word": "good man elit"
                 },
                 {
-                    "docid": "3",
-                    "rank": "0.300000",
-                    "search word": "good man elit"
-                },
-                {
                     "docid": "4",
-                    "rank": "0.200000",
+                    "rank": "1.900000",
                     "search word": "good man elit"
                 }
             ],
             "result": true
         },
         "request_7": {
-            "result": false
+            "result": false,
+            "search word": "qweq"
         }
     }
 }

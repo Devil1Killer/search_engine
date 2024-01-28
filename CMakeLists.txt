@@ -1,9 +1,13 @@
-#
+
+cmake_minimum_required(VERSION 3.27)
+project(project)
+
+
 include(FetchContent)
+
 FetchContent_Declare(
         googletest
-        URL
-        https://github.com/google/googletest/archive/609281088cfefc76f9d0ce82e1ff6c30cc3591e5.zip
+        URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
 )
 
 set(gtest_disable_pthreads on)
@@ -11,13 +15,11 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 FetchContent_MakeAvailable(googletest)
 enable_testing()
-#
+
 
 set(JSON_BuildTests OFF CACHE INTERNAL "")
 
 add_subdirectory(nlohmann_json)
-cmake_minimum_required(VERSION 3.27)
-project(project)
 
 set(CMAKE_CXX_STANDARD 23)
 

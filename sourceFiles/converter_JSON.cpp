@@ -99,6 +99,7 @@ void ConverterJSON::putAnswers(std::vector<std::vector<std::pair<int, float>>> a
 
         } else {
 
+            dict["answers"][request]["search word"] = searchWord[i];
             dict["answers"][request]["result"] = false;
 
         }
@@ -133,4 +134,52 @@ void ConverterJSON::putAnswers(std::vector<std::vector<std::pair<int, float>>> a
 */
 
 }
+
+//----------------------------------------------------------------------------------
+
+void ConverterJSON::createRequest(){
+
+    std::vector<std::string> words;
+
+    int count = 0;
+    std::string word;
+
+    std::cout << "Введите количество запроссов: ";
+
+    std::cin >> count;
+
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    for (int i = 0; i < count; ++i) {
+
+        std::cout << "Введите слова(слово) которое ищите: ";
+
+        std::getline(std::cin, word);
+
+        words.push_back(word);
+
+    }
+
+    nlohmann::json dict;
+
+    std::fstream file("../json/requests.json", std::ios::out);
+
+    for (int i = 0; i < words.size(); ++i) {
+
+        dict["requests"].push_back(words[i]);
+
+    }
+
+    file << std::setw(4) << dict;
+
+    file.close();
+
+}
+
+
+
+
+
+
+
 

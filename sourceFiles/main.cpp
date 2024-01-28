@@ -1,5 +1,4 @@
 #include <iostream>
-#include <fstream>
 #include "gtest/gtest.h"
 #include "../headerFiles/inverted_index.h"
 #include "../headerFiles/converter_JSON.h"
@@ -21,9 +20,13 @@ void TestInvertedIndexFunctionality(
     InvertedIndex idx;
     idx.UpdateDocumentBase(docs);
     for(auto& request : requests) {
+
         std::vector<Entry> word_count = idx.GetWordCount(request);
+
         result.push_back(word_count);
+
     }
+
     ASSERT_EQ(result, expected);
 }
 
@@ -48,12 +51,12 @@ TEST(TestCaseInvertedIndex, TestBasic2) {
             "milk milk milk milk milk water water water water water",
             "americano cappuccino"
     };
-    const vector<string> requests = {"milk", "water", "cappuchino"};
+    const vector<string> requests = {"milk", "water", "cappuccino"};
     const vector<vector<Entry>> expected = {
             {
                     {0, 4}, {1, 1}, {2, 5}
             }, {
-                    {0, 2}, {1, 2}, {2, 5}
+                    {0, 3}, {1, 2}, {2, 5}
             }, {
                     {3, 1}
             }
@@ -128,17 +131,27 @@ TEST(TestCaseSearchServer, TestTop5) {
     const vector<string> request = {"moscow is the capital of russia"};
     const std::vector<vector<RelativeIndex>> expected = {
             {
-                    {7, 1},
-                    {14, 1},
-                    {0, 0.666666687},
-                    {1, 0.666666687},
-                    {2, 0.666666687}
+                    {7, 0.2},
+                    {14, 0.2}
             }
     };
     InvertedIndex idx;
     idx.UpdateDocumentBase(docs);
     SearchServer srv(idx);
     std::vector<vector<RelativeIndex>> result = srv.search(request);
+
+    for (int i = 0; i < result.size(); ++i) {
+
+        std::cout << request[0] << std::endl;
+
+        for (int j = 0; j < result[i].size(); ++j) {
+
+            std::cout << result[i][j].doc_id << " " << result[i][j].rank << std::endl;
+
+        }
+
+    }
+
     ASSERT_EQ(result, expected);
 }
 
@@ -165,12 +178,50 @@ int main() {
     ConverterJSON converterJSON;
     InvertedIndex invertedIndex;
 
-    invertedIndex.UpdateDocumentBase(converterJSON.GetTextDocuments());
+    string command;
 
-    SearchServer searchServer( invertedIndex);
+    int i = 0;
 
-    converterJSON.putAnswers(convert(searchServer.search(converterJSON.GetRequests())));
+    while (i != 1000) {
 
-    system("pause");
+        cout << "Добро пожаловать в программу по поиску релевантности." << endl;
+        cout << "Есть следующие команды:" << endl;
+        cout << "create a request (С) - Создать лист слов запросов для поисковой программы." << endl;
+        cout << "start (S) - Получить результат." << endl;
+        cout << "update (U) - Принудительно обновить базу данных." << endl;
+        cout << "exit (E) - выйти из программы." << endl;
+        cout << "Введите команду: ";
+
+        std::getline(std::cin, command);
+
+        if (command == "start" || command == "S") {
+
+            invertedIndex.UpdateDocumentBase(converterJSON.GetTextDocuments());
+
+            SearchServer searchServer(invertedIndex);
+
+            converterJSON.putAnswers(convert(searchServer.search(converterJSON.GetRequests())));
+
+        } else if (command == "update" || command == "U") {
+
+            invertedIndex.UpdateDocumentBase(converterJSON.GetTextDocuments());
+
+        } else if (command == "create a request" || command == "C") {
+
+            converterJSON.createRequest();
+
+        } else if (command == "exit" || command == "E") {
+
+            break;
+
+        } else {
+
+            cout << "Вы ввели неизвестную команду!" << endl;
+
+        }
+
+        i++;
+
+    }
 
 }

@@ -3,6 +3,8 @@
 #include <fstream>
 #include <vector>
 #include <map>
+#include <thread>
+#include <mutex>
 
 struct Entry {
 
@@ -26,6 +28,7 @@ public:
 
                 /*** Обновить или заполнить базу документов, по которой будем совершать поиск*
                 @param texts_input содержимое документов */
+
     void UpdateDocumentBase(std::vector<std::string> input_docs);
 
                 /*** Метод определяет количество вхождений слова word в загруженной базе документов

@@ -75,21 +75,20 @@ std::vector<std::vector<RelativeIndex>> SearchServer::search(const std::vector<s
 
     }
 
-/*    // Для разработчика получить результат
 
-    for (int i = 0, q = 0; i < numberSearchWords.size(); ++i) {
+    // Для разработчика получить результат
+
+/*    for (int i = 0, q = 0; i < numberSearchWords.size(); ++i) {
 
         for (int j = 0; j < numberSearchWords[i]; ++j) {
 
             std::cout << numberSearchWords[i] << " " << separateWords[j + q] << std::endl;
-
         }
 
         q += numberSearchWords[i];
 
-    }
+    }*/
 
-    */
 
     for (int i = 0, q = 0; i < numberSearchWords.size(); ++i) {
 
@@ -120,8 +119,6 @@ std::vector<std::vector<RelativeIndex>> SearchServer::search(const std::vector<s
 
         q += numberSearchWords[i];
 
-
-
         for (int j = 0; j < list.size(); ++j) {
 
             RelativeIndex rank {list[j].doc_id,list[j].count / 10.0f};
@@ -140,9 +137,9 @@ std::vector<std::vector<RelativeIndex>> SearchServer::search(const std::vector<s
 
     }
 
-/*    // Для разработчика получить результат
+    // Для разработчика получить результат
 
-    for (int i = 0; i < result.size(); ++i) {
+/*    for (int i = 0; i < result.size(); ++i) {
 
         std::cout << queries_input[i] << std::endl;
 
@@ -152,9 +149,8 @@ std::vector<std::vector<RelativeIndex>> SearchServer::search(const std::vector<s
 
         }
 
-    }
+    }*/
 
-*/
 
     return result;
 

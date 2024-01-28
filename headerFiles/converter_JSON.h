@@ -25,5 +25,7 @@ public:
     /** Положить в файл answers.json результаты поисковых запросов **/
     void putAnswers(std::vector<std::vector<std::pair<int, float>>> answers);
 
+    void createRequest();
+
 };
 

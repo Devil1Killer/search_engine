@@ -6,7 +6,7 @@ method=url
 command=C:/CLion/CLion 2023.3.2/bin/cmake/win/x64/bin/cmake.exe;-P;C:/CLion/search_engine/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/download-googletest-populate.cmake;COMMAND;C:/CLion/CLion 2023.3.2/bin/cmake/win/x64/bin/cmake.exe;-P;C:/CLion/search_engine/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/verify-googletest-populate.cmake;COMMAND;C:/CLion/CLion 2023.3.2/bin/cmake/win/x64/bin/cmake.exe;-P;C:/CLion/search_engine/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/extract-googletest-populate.cmake
 source_dir=C:/CLion/search_engine/cmake-build-debug/_deps/googletest-src
 work_dir=C:/CLion/search_engine/cmake-build-debug/_deps
-url(s)=https://github.com/google/googletest/archive/609281088cfefc76f9d0ce82e1ff6c30cc3591e5.zip
+url(s)=https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
 hash=
 no_extract=
 

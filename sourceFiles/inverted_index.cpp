@@ -1,5 +1,64 @@
 #include "../headerFiles/inverted_index.h"
 
+std::mutex mtx;
+
+void index(std::vector<std::string> input_docs, size_t i, std::map<std::string, std::vector<Entry>>& freq_dictionary, int& endStream) {
+
+    std::string word;
+    int beginningWord = 0;
+
+    for (int j = 0; j <= input_docs[i].size(); ++j) {
+
+        if (input_docs[i][j] == ' ' || input_docs[i][j] == '\0') {
+
+            word = input_docs[i].substr(beginningWord, j - beginningWord);
+            beginningWord = j + 1;
+
+            mtx.lock();
+
+            auto it = freq_dictionary.find(word);
+
+            if (it!=freq_dictionary.end()) {
+
+                bool key = true;
+                std::vector<Entry> &entries = it->second;
+
+                for (auto& qqq : entries) {
+
+                    if (qqq.doc_id == i) {
+
+                        qqq.count++;
+                        key = false;
+
+                    }
+
+                }
+
+                if (key) {
+
+                    Entry entry{i, 1};
+                    freq_dictionary[word].push_back(entry);
+
+                }
+
+            }
+            else {
+
+                Entry entry{ i, 1 };
+                freq_dictionary[word].push_back(entry);
+
+            }
+
+            mtx.unlock();
+
+        }
+
+    }
+
+    endStream++;
+
+}
+
 void InvertedIndex::UpdateDocumentBase(std::vector<std::string> input_docs) {
 
     std::ifstream checkFile("../resources/frequency dictionary file.txt");
@@ -24,6 +83,8 @@ void InvertedIndex::UpdateDocumentBase(std::vector<std::string> input_docs) {
                     std::string name;
 
                     while (!checkFile.eof()) {
+
+                        name = "";
 
                         checkFile >> name;
                         checkFile >> size;
@@ -61,53 +122,19 @@ void InvertedIndex::UpdateDocumentBase(std::vector<std::string> input_docs) {
 
     checkFile.close();
 
+    freq_dictionary.clear();
+
+    int endStream = 0;
+
     for (size_t i = 0; i < input_docs.size(); ++i) {
 
-        std::string word;
-        int beginningWord = 0;
+        std::thread indexing (index, input_docs, i, std::ref(freq_dictionary), std::ref(endStream));
 
-        for (int j = 0; j <= input_docs[i].size(); ++j) {
+        indexing.detach();
 
-            if (input_docs[i][j] == ' ' || input_docs[i][j] == '\0') {
+    }
 
-                word = input_docs[i].substr(beginningWord, j - beginningWord);
-                beginningWord = j + 1;
-
-                auto it = freq_dictionary.find(word);
-
-                if (it!=freq_dictionary.end()) {
-
-                    bool key = true;
-                    std::vector<Entry> &entries = it->second;
-
-                    for (auto& qqq : entries) {
-
-                        if (qqq.doc_id == i) {
-
-                            qqq.count++;
-                            key = false;
-                        }
-
-                    }
-
-                    if (key) {
-
-                        Entry entry{i, 1};
-                        freq_dictionary[word].push_back(entry);
-
-                    }
-
-                }
-                else {
-
-                    Entry entry{ i, 1 };
-                    freq_dictionary[word].push_back(entry);
-
-                }
-
-            }
-
-        }
+    while (endStream != input_docs.size()) {
 
     }
 
@@ -142,9 +169,9 @@ void InvertedIndex::UpdateDocumentBase(std::vector<std::string> input_docs) {
 
     fillingFile.close();
 
-/*  // Для разработчика получить результат
+  // Для разработчика получить результат
 
-    for (auto &pair: freq_dictionary) {
+/*    for (auto &pair: freq_dictionary) {
 
         const std::string &key = pair.first;
         std::vector <Entry> &entries = pair.second;
@@ -157,9 +184,8 @@ void InvertedIndex::UpdateDocumentBase(std::vector<std::string> input_docs) {
 
         }
 
-    }
+    }*/
 
-    */
 
 }
 
@@ -186,15 +212,14 @@ std::vector<Entry> InvertedIndex::GetWordCount(const std::string &word) {
 
 
 
-/* // Для разработчика получить результат
+ // Для разработчика получить результат
 
-    for (int i = 0; i < entrys.size(); ++i) {
+/*    for (int i = 0; i < entrys.size(); ++i) {
 
         std::cout << word << " " << entrys[i].doc_id << " " << entrys[i].count << std::endl;
 
-    }
+    }*/
 
-*/
 
     return entrys;
 
