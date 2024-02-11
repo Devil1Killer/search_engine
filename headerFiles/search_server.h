@@ -1,6 +1,6 @@
 #pragma once
 #include "algorithm"
-#include "../headerFiles/inverted_index.h"
+#include "inverted_index.h"
 
 struct RelativeIndex{
 

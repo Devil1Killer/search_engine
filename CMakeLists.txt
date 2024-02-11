@@ -1,4 +1,3 @@
-
 cmake_minimum_required(VERSION 3.27)
 project(project)
 
@@ -16,26 +15,15 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 FetchContent_MakeAvailable(googletest)
 enable_testing()
 
+set(CMAKE_CXX_STANDARD 23)
 
 set(JSON_BuildTests OFF CACHE INTERNAL "")
 
+set(MY_HEADERFILES_DIR ${CMAKE_SOURCE_DIR}/headerFiles)
+set(MY_SOURCEFILES_DIR ${CMAKE_SOURCE_DIR}/sourceFiles)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
+
 add_subdirectory(nlohmann_json)
 
-set(CMAKE_CXX_STANDARD 23)
-
-add_executable(${CMAKE_PROJECT_NAME}
-        sourceFiles/main.cpp
-        sourceFiles/inverted_index.cpp
-        sourceFiles/converter_JSON.cpp
-        sourceFiles/search_server.cpp
-        headerFiles/inverted_index.h
-        headerFiles/converter_JSON.h
-        headerFiles/search_server.h)
-
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE nlohmann_json::nlohmann_json)
-
-#
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE gtest_main)
-include(GoogleTest)
-gtest_discover_tests(${CMAKE_PROJECT_NAME})
-#
+add_subdirectory(sourceFiles)
+add_subdirectory(tests)

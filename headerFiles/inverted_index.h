@@ -24,6 +24,10 @@ class InvertedIndex {
 
 public:
 
+    std::vector<int> wordCount;//-------------------------------------------------------------------------------------------------
+    std::vector<std::string> docs; // список содержимого документов
+    std::map<std::string, std::vector<Entry>> freq_dictionary; // частотный словарь
+
     InvertedIndex() = default;
 
                 /*** Обновить или заполнить базу документов, по которой будем совершать поиск*
@@ -38,8 +42,7 @@ public:
 
 private:
 
-    std::vector<std::string> docs; // список содержимого документов
-    std::map<std::string, std::vector<Entry>> freq_dictionary; // частотный словарь
+
 
 };
 

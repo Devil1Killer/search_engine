@@ -1,8 +1,8 @@
-#include "../headerFiles/inverted_index.h"
+#include "inverted_index.h"
 
 std::mutex mtx;
 
-void index(std::vector<std::string> input_docs, size_t i, std::map<std::string, std::vector<Entry>>& freq_dictionary, int& endStream) {
+void index(std::vector<std::string> input_docs, size_t i, std::map<std::string, std::vector<Entry>>& freq_dictionary, std::vector<int>& wordCount) {
 
     std::string word;
     int beginningWord = 0;
@@ -11,10 +11,12 @@ void index(std::vector<std::string> input_docs, size_t i, std::map<std::string, 
 
         if (input_docs[i][j] == ' ' || input_docs[i][j] == '\0') {
 
+            mtx.lock();
+
             word = input_docs[i].substr(beginningWord, j - beginningWord);
             beginningWord = j + 1;
 
-            mtx.lock();
+            wordCount[i]++;
 
             auto it = freq_dictionary.find(word);
 
@@ -55,13 +57,13 @@ void index(std::vector<std::string> input_docs, size_t i, std::map<std::string, 
 
     }
 
-    endStream++;
-
 }
 
 void InvertedIndex::UpdateDocumentBase(std::vector<std::string> input_docs) {
 
-    std::ifstream checkFile("../resources/frequency dictionary file.txt");
+    freq_dictionary.clear();
+
+    std::ifstream checkFile("resources/frequency dictionary file.txt");
 
     if (!checkFile.is_open()) std::cout << " File with frequency words was not found." << std::endl;
     else {
@@ -112,6 +114,12 @@ void InvertedIndex::UpdateDocumentBase(std::vector<std::string> input_docs) {
 
                     i++;
 
+                    std::string wordCountSize;
+
+                    checkFile >> wordCountSize;
+
+                    wordCount.push_back(atoi(wordCountSize.c_str()));
+
                 } else break;
 
             }
@@ -122,29 +130,34 @@ void InvertedIndex::UpdateDocumentBase(std::vector<std::string> input_docs) {
 
     checkFile.close();
 
-    freq_dictionary.clear();
-
-    int endStream = 0;
+    std::vector<std::thread> indexing;
 
     for (size_t i = 0; i < input_docs.size(); ++i) {
 
-        std::thread indexing (index, input_docs, i, std::ref(freq_dictionary), std::ref(endStream));
-
-        indexing.detach();
+        wordCount.push_back(0);
 
     }
 
-    while (endStream != input_docs.size()) {
+    for (size_t i = 0; i < input_docs.size(); ++i) {
+
+        indexing.push_back(std::thread(index, input_docs, i, std::ref(freq_dictionary), std::ref(wordCount)));
 
     }
 
-    std::fstream fillingFile("../resources/frequency dictionary file.txt", std::ios::out);
+    for (size_t i = 0; i < input_docs.size(); ++i) {
+
+        indexing[i].join();
+
+    }
+
+    std::fstream fillingFile("resources/frequency dictionary file.txt", std::ios::out);
 
     fillingFile << input_docs.size() << std::endl;
 
     for (int i = 0; i < input_docs.size(); ++i) {
 
         fillingFile << input_docs[i].size() << std::endl;
+        fillingFile << wordCount[i] << std::endl;
 
     }
 
@@ -169,24 +182,6 @@ void InvertedIndex::UpdateDocumentBase(std::vector<std::string> input_docs) {
 
     fillingFile.close();
 
-  // Для разработчика получить результат
-
-/*    for (auto &pair: freq_dictionary) {
-
-        const std::string &key = pair.first;
-        std::vector <Entry> &entries = pair.second;
-
-        std::cout << "index[\"" << key << "\"] = ";
-
-        for (auto &element: entries) {
-
-            std::cout  << "Doc ID: " << element.doc_id << ", Count: " << element.count << std::endl;
-
-        }
-
-    }*/
-
-
 }
 
 std::vector<Entry> InvertedIndex::GetWordCount(const std::string &word) {
@@ -210,18 +205,6 @@ std::vector<Entry> InvertedIndex::GetWordCount(const std::string &word) {
 
     }
 
-
-
- // Для разработчика получить результат
-
-/*    for (int i = 0; i < entrys.size(); ++i) {
-
-        std::cout << word << " " << entrys[i].doc_id << " " << entrys[i].count << std::endl;
-
-    }*/
-
-
     return entrys;
 
 }
-

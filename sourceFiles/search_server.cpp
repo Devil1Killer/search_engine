@@ -1,4 +1,4 @@
-#include "../headerFiles/search_server.h"
+#include "search_server.h"
 
 std::vector<std::vector<RelativeIndex>> SearchServer::search(const std::vector<std::string>& queries_input) {
 
@@ -6,19 +6,6 @@ std::vector<std::vector<RelativeIndex>> SearchServer::search(const std::vector<s
 
     std::vector <Entry> list;
     std::vector <Entry> newList;
-
-/* // Для разработчика получить результат
-
-
-    for (int i = 0; i < queries_input.size(); ++i) {
-
-        std::cout << queries_input[i] << std::endl;
-
-    }
-    std::cout << std::endl << std::endl;
-
-*/
-
 
     std::vector <int> numberSearchWords;
 
@@ -39,8 +26,6 @@ std::vector<std::vector<RelativeIndex>> SearchServer::search(const std::vector<s
         numberSearchWords.push_back(count);
 
     }
-
-    //---------------------------------------------------------------
 
     std::vector<std::string> separateWords;
 
@@ -75,21 +60,6 @@ std::vector<std::vector<RelativeIndex>> SearchServer::search(const std::vector<s
 
     }
 
-
-    // Для разработчика получить результат
-
-/*    for (int i = 0, q = 0; i < numberSearchWords.size(); ++i) {
-
-        for (int j = 0; j < numberSearchWords[i]; ++j) {
-
-            std::cout << numberSearchWords[i] << " " << separateWords[j + q] << std::endl;
-        }
-
-        q += numberSearchWords[i];
-
-    }*/
-
-
     for (int i = 0, q = 0; i < numberSearchWords.size(); ++i) {
 
         std::vector<RelativeIndex> interval;
@@ -103,11 +73,35 @@ std::vector<std::vector<RelativeIndex>> SearchServer::search(const std::vector<s
             if (j == 0) list = newList;
             else {
 
+                for (int k = 0; k < newList.size(); ++k) {
+
+                    int iterator = 0;
+
+                    for (int l = 0; l < list.size(); ++l) {
+
+                        if (list[l].doc_id != newList[k].doc_id) iterator++;
+
+                    }
+
+                    if (iterator == list.size()) {
+
+                        Entry temp;
+
+                        temp = newList[k];
+
+                        temp.count = 0;
+
+                        list.push_back(temp);
+
+                    }
+
+                }
+
                 for (int k = 0; k < list.size() && k < newList.size(); ++k) {
 
-                    for (auto& qqq : list) {
+                    for (auto& temp : list) {
 
-                        if (qqq.doc_id == newList[k].doc_id) qqq.count += newList[k].count;
+                        if (temp.doc_id == newList[k].doc_id) temp.count += newList[k].count;
 
                     }
 
@@ -115,13 +109,39 @@ std::vector<std::vector<RelativeIndex>> SearchServer::search(const std::vector<s
 
             }
 
+/*            if (j == 0) list = newList;
+            else {
+
+                for (int k = 0; k < list.size() && k < newList.size(); ++k) {
+
+                    for (auto& temp : list) {
+
+                        if (temp.doc_id == newList[k].doc_id) temp.count += newList[k].count;
+
+                    }
+
+                }
+
+            }*/
+
         }
 
         q += numberSearchWords[i];
 
+        std::sort(list.begin(),list.end(), [](const Entry& p1, const Entry& p2){
+
+            return p1.doc_id < p2.doc_id;
+
+        });
+
         for (int j = 0; j < list.size(); ++j) {
 
-            RelativeIndex rank {list[j].doc_id,list[j].count / 10.0f};
+//            std::cout << list[j].doc_id << std::endl;
+//            std::cout << list[j].count << std::endl;
+//            std::cout << float (_index.wordCount[j]) << std::endl;
+//            std::cout << std::endl;
+
+            RelativeIndex rank {list[j].doc_id,list[j].count / float (_index.wordCount[j])};
 
             interval.push_back(rank);
 
@@ -137,22 +157,22 @@ std::vector<std::vector<RelativeIndex>> SearchServer::search(const std::vector<s
 
     }
 
-    // Для разработчика получить результат
-
-/*    for (int i = 0; i < result.size(); ++i) {
+/*
+    for (int i = 0; i < result.size(); ++i) {
 
         std::cout << queries_input[i] << std::endl;
 
         for (int j = 0; j < result[i].size(); ++j) {
 
-            std::cout << result[i][j].doc_id << " " << result[i][j].rank << std::endl;
+            std::cout << result[i][j].doc_id << std::endl;
+            std::cout << result[i][j].rank << std::endl;
 
         }
 
-    }*/
+    }
+*/
 
 
     return result;
 
 }
-

@@ -1,44 +1,57 @@
-#include "../headerFiles/converter_JSON.h"
+#include "converter_JSON.h"
 
 std::vector<std::string> ConverterJSON::GetTextDocuments() {
 
     std::vector<std::string> pathToFile;
     std::vector<std::string> readingFile;
 
-    std::ifstream file("../json/config.json");
-    nlohmann::json dict;
-    file >> dict;
-    pathToFile = dict["files"];
-    file.close();
+    std::ifstream file("json/config.json");
 
-    std::string textDocuments;
+    if (!file.is_open()) {
 
-    for (int i = 0; i < pathToFile.size(); ++i) {
+        std::cout << "Configuration file not found, please create it." << std::endl;
 
-        std::ifstream fileJson(pathToFile[i]);
+        std::system("pause");
 
-        if (!fileJson.is_open()) {
+        std::exit(0);
 
-            std::cout << pathToFile[i] << " The file did not open." << std::endl;
+    }
+    else {
 
-        }
-        else {
+        nlohmann::json dict;
+        file >> dict;
+        pathToFile = dict["files"];
+        file.close();
 
-            while (!fileJson.eof()) {
+        std::string textDocuments;
 
-                std::getline(fileJson, textDocuments);
+        for (int i = 0; i < pathToFile.size(); ++i) {
+
+            std::ifstream fileJson(pathToFile[i]);
+
+            if (!fileJson.is_open()) {
+
+                std::cout << pathToFile[i] << " The file did not open." << std::endl;
+
+            } else {
+
+                while (!fileJson.eof()) {
+
+                    std::getline(fileJson, textDocuments);
+
+                }
+
+                readingFile.push_back(textDocuments);
 
             }
 
-            readingFile.push_back(textDocuments);
+            fileJson.close();
 
         }
 
-        fileJson.close();
+        return readingFile;
 
     }
-
-    return readingFile;
 
 }
 
@@ -46,7 +59,7 @@ int ConverterJSON::GetResponsesLimit() {
 
     nlohmann::json dict;
 
-    std::ifstream file("../json/config.json");
+    std::ifstream file("json/config.json");
 
     file >> dict;
 
@@ -60,13 +73,26 @@ std::vector<std::string> ConverterJSON::GetRequests() {
 
     nlohmann::json dict;
 
-    std::ifstream file("../json/requests.json");
+    std::ifstream file("json/requests.json");
 
-    file >> dict;
+    if (!file.is_open()) {
 
-    file.close();
+        std::cout << "The request file was not found, please create it." << std::endl;
 
-    return dict["requests"];
+        std::system("pause");
+
+        std::exit(0);
+
+    }
+    else {
+
+        file >> dict;
+
+        file.close();
+
+        return dict["requests"];
+
+    }
 
 }
 
@@ -74,68 +100,65 @@ void ConverterJSON::putAnswers(std::vector<std::vector<std::pair<int, float>>> a
 
     nlohmann::json dict;
 
-    std::fstream fileAnswers("../json/answers.json",  std::ios::out);
+    std::vector<std::string> qwe {"json/answers.json", "answer/answers.txt"};
 
-    std::vector<std::string> searchWord = GetRequests();
+    for (int i = 0; i < qwe.size(); ++i) {
 
-    dict["answers"];
 
-    for (int i = 0; i < answers.size(); ++i) {
+        std::fstream fileAnswers(qwe[i], std::ios::out);
 
-        std::string request = "request_" + std::to_string(i + 1);
+        std::vector<std::string> searchWord = GetRequests();
 
-        if (answers[i].size() != 0) {
+        dict["answers"];
 
-            dict["answers"][request]["result"] = true;
-            dict["answers"][request]["relevance"];
+        for (int i = 0; i < answers.size(); ++i) {
 
-            for (int j = 0; j < answers[i].size() && j < GetResponsesLimit(); ++j) {
+            std::string request = "request_" + std::to_string(i + 1);
 
-                dict["answers"][request]["relevance"][j]["search word"] = searchWord[i];
-                dict["answers"][request]["relevance"][j]["docid"] = std::to_string(answers[i][j].first);
-                dict["answers"][request]["relevance"][j]["rank"] = std::to_string(answers[i][j].second);
+            if (answers[i].size() != 0) {
+
+                dict["answers"][request]["result"] = true;
+                dict["answers"][request]["relevance"];
+
+                for (int j = 0; j < answers[i].size() && j < GetResponsesLimit(); ++j) {
+
+                    dict["answers"][request]["relevance"][j]["search word"] = searchWord[i];
+                    dict["answers"][request]["relevance"][j]["docid"] = std::to_string(answers[i][j].first);
+                    dict["answers"][request]["relevance"][j]["rank"] = std::to_string(answers[i][j].second);
+
+                }
+
+            } else {
+
+                dict["answers"][request]["search word"] = searchWord[i];
+                dict["answers"][request]["result"] = false;
 
             }
 
-        } else {
+        }
 
-            dict["answers"][request]["search word"] = searchWord[i];
-            dict["answers"][request]["result"] = false;
+        fileAnswers << std::setw(4) << dict;
+
+        fileAnswers.close();
+    }
+
+    //-------------------------------------------------------------------------------------------
+
+/*    for (int i = 0; i < answers.size(); ++i) {
+
+        std::vector<std::string> searchWord = GetRequests();
+
+        std::cout << searchWord[i] << std::endl;
+
+        for (int j = 0; j < answers[i].size(); ++j) {
+
+            std::cout << answers[i][j].first << " " << answers[i][j].second << std::endl;
 
         }
 
-    }
-
-    fileAnswers << std::setw(4) << dict;
-
-    fileAnswers.close();
-
-/* // Для разработчика получить результат
-
-    int i = 0;
-
-    std::vector<std::string> searchWord = GetRequests();
-
-    for (const auto& innerVec : answers) {
-
-        std::cout << searchWord[i] << " ";
-
-        for (const auto& pair : innerVec) {
-
-            std::cout << "(" << pair.first << ", " << pair.second << ") ";
-
-        }
-
-        std::cout << std::endl;
-        i++;
-
-    }
-
-*/
+    }*/
 
 }
-
-//----------------------------------------------------------------------------------
 
 void ConverterJSON::createRequest(){
 
@@ -162,7 +185,7 @@ void ConverterJSON::createRequest(){
 
     nlohmann::json dict;
 
-    std::fstream file("../json/requests.json", std::ios::out);
+    std::fstream file("json/requests.json", std::ios::out);
 
     for (int i = 0; i < words.size(); ++i) {
 
@@ -175,11 +198,3 @@ void ConverterJSON::createRequest(){
     file.close();
 
 }
-
-
-
-
-
-
-
-

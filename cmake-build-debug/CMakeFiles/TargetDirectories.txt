@@ -1,4 +1,3 @@
-C:/CLion/search_engine/cmake-build-debug/CMakeFiles/project.dir
 C:/CLion/search_engine/cmake-build-debug/CMakeFiles/test.dir
 C:/CLion/search_engine/cmake-build-debug/CMakeFiles/edit_cache.dir
 C:/CLion/search_engine/cmake-build-debug/CMakeFiles/rebuild_cache.dir
@@ -38,3 +37,19 @@ C:/CLion/search_engine/cmake-build-debug/nlohmann_json/CMakeFiles/list_install_c
 C:/CLion/search_engine/cmake-build-debug/nlohmann_json/CMakeFiles/install.dir
 C:/CLion/search_engine/cmake-build-debug/nlohmann_json/CMakeFiles/install/local.dir
 C:/CLion/search_engine/cmake-build-debug/nlohmann_json/CMakeFiles/install/strip.dir
+C:/CLion/search_engine/cmake-build-debug/sourceFiles/CMakeFiles/project.dir
+C:/CLion/search_engine/cmake-build-debug/sourceFiles/CMakeFiles/test.dir
+C:/CLion/search_engine/cmake-build-debug/sourceFiles/CMakeFiles/edit_cache.dir
+C:/CLion/search_engine/cmake-build-debug/sourceFiles/CMakeFiles/rebuild_cache.dir
+C:/CLion/search_engine/cmake-build-debug/sourceFiles/CMakeFiles/list_install_components.dir
+C:/CLion/search_engine/cmake-build-debug/sourceFiles/CMakeFiles/install.dir
+C:/CLion/search_engine/cmake-build-debug/sourceFiles/CMakeFiles/install/local.dir
+C:/CLion/search_engine/cmake-build-debug/sourceFiles/CMakeFiles/install/strip.dir
+C:/CLion/search_engine/cmake-build-debug/tests/CMakeFiles/GtestTests.dir
+C:/CLion/search_engine/cmake-build-debug/tests/CMakeFiles/test.dir
+C:/CLion/search_engine/cmake-build-debug/tests/CMakeFiles/edit_cache.dir
+C:/CLion/search_engine/cmake-build-debug/tests/CMakeFiles/rebuild_cache.dir
+C:/CLion/search_engine/cmake-build-debug/tests/CMakeFiles/list_install_components.dir
+C:/CLion/search_engine/cmake-build-debug/tests/CMakeFiles/install.dir
+C:/CLion/search_engine/cmake-build-debug/tests/CMakeFiles/install/local.dir
+C:/CLion/search_engine/cmake-build-debug/tests/CMakeFiles/install/strip.dir
