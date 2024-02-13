@@ -142,22 +142,6 @@ void ConverterJSON::putAnswers(std::vector<std::vector<std::pair<int, float>>> a
         fileAnswers.close();
     }
 
-    //-------------------------------------------------------------------------------------------
-
-/*    for (int i = 0; i < answers.size(); ++i) {
-
-        std::vector<std::string> searchWord = GetRequests();
-
-        std::cout << searchWord[i] << std::endl;
-
-        for (int j = 0; j < answers[i].size(); ++j) {
-
-            std::cout << answers[i][j].first << " " << answers[i][j].second << std::endl;
-
-        }
-
-    }*/
-
 }
 
 void ConverterJSON::createRequest(){

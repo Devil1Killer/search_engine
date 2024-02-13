@@ -109,21 +109,6 @@ std::vector<std::vector<RelativeIndex>> SearchServer::search(const std::vector<s
 
             }
 
-/*            if (j == 0) list = newList;
-            else {
-
-                for (int k = 0; k < list.size() && k < newList.size(); ++k) {
-
-                    for (auto& temp : list) {
-
-                        if (temp.doc_id == newList[k].doc_id) temp.count += newList[k].count;
-
-                    }
-
-                }
-
-            }*/
-
         }
 
         q += numberSearchWords[i];
@@ -135,11 +120,6 @@ std::vector<std::vector<RelativeIndex>> SearchServer::search(const std::vector<s
         });
 
         for (int j = 0; j < list.size(); ++j) {
-
-//            std::cout << list[j].doc_id << std::endl;
-//            std::cout << list[j].count << std::endl;
-//            std::cout << float (_index.wordCount[j]) << std::endl;
-//            std::cout << std::endl;
 
             RelativeIndex rank {list[j].doc_id,list[j].count / float (_index.wordCount[j])};
 
@@ -156,22 +136,6 @@ std::vector<std::vector<RelativeIndex>> SearchServer::search(const std::vector<s
         result.push_back(interval);
 
     }
-
-/*
-    for (int i = 0; i < result.size(); ++i) {
-
-        std::cout << queries_input[i] << std::endl;
-
-        for (int j = 0; j < result[i].size(); ++j) {
-
-            std::cout << result[i][j].doc_id << std::endl;
-            std::cout << result[i][j].rank << std::endl;
-
-        }
-
-    }
-*/
-
 
     return result;
 

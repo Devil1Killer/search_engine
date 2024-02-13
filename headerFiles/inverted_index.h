@@ -24,7 +24,7 @@ class InvertedIndex {
 
 public:
 
-    std::vector<int> wordCount;//-------------------------------------------------------------------------------------------------
+    std::vector<int> wordCount; // список количества слов в документах
     std::vector<std::string> docs; // список содержимого документов
     std::map<std::string, std::vector<Entry>> freq_dictionary; // частотный словарь
 
@@ -39,10 +39,6 @@ public:
                 * @param word слово, частоту вхождений которого необходимо определить
                 * @return возвращает подготовленный список с частотой слов*/
     std::vector<Entry> GetWordCount(const std::string& word);
-
-private:
-
-
 
 };
 
