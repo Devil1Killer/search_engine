@@ -34,3 +34,21 @@
 
 После ввода данных во всех файлах запустите программу, нажав на project.
 После завершения результат будет в папке answer и откройте answers.
+
+// Для разрабочиков.
+
+Среда разработки использовалась CLine.
+
+Используется CMake VERSION 3.27 и C++ 23 VERSION.
+
+Библиотеки используемые в проекте.
+
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <map> 
+#include <fstream>
+#include <thread>
+#include <mutex>
+#include "algorithm"
+#include "nlohmann/json.hpp"

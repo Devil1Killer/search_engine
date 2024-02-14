@@ -100,12 +100,18 @@ void ConverterJSON::putAnswers(std::vector<std::vector<std::pair<int, float>>> a
 
     nlohmann::json dict;
 
-    std::vector<std::string> qwe {"json/answers.json", "answer/answers.txt"};
+    std::fstream fileAnswers("json/answers.json", std::ios::out);
 
-    for (int i = 0; i < qwe.size(); ++i) {
+    if (!fileAnswers.is_open()) {
 
+        std::cout << "The file cannot be written. Reason: no disk space or no write access." << std::endl;
 
-        std::fstream fileAnswers(qwe[i], std::ios::out);
+        std::system("pause");
+
+        std::exit(0);
+
+    }
+    else {
 
         std::vector<std::string> searchWord = GetRequests();
 
@@ -140,6 +146,7 @@ void ConverterJSON::putAnswers(std::vector<std::vector<std::pair<int, float>>> a
         fileAnswers << std::setw(4) << dict;
 
         fileAnswers.close();
+
     }
 
 }
