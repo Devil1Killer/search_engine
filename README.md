@@ -42,12 +42,20 @@
 
 Библиотеки используемые в проекте.
 
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <map> 
-#include <fstream>
-#include <thread>
-#include <mutex>
+#include iostream
+
+#include fstream
+
+#include vector
+
+#include map
+
+#include fstream
+
+#include thread
+
+#include mutex
+
 #include "algorithm"
+
 #include "nlohmann/json.hpp"
