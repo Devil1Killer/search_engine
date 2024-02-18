@@ -40,22 +40,8 @@
 
 Используется CMake VERSION 3.27 и C++ 23 VERSION.
 
-Библиотеки используемые в проекте.
+Используется сторонние библиотеки: 
 
-#include iostream
+"nlohmann/json.hpp"
 
-#include fstream
-
-#include vector
-
-#include map
-
-#include fstream
-
-#include thread
-
-#include mutex
-
-#include "algorithm"
-
-#include "nlohmann/json.hpp"
+"gtest/gtest.h"
